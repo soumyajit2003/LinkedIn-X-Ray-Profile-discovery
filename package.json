@@ -1,0 +1,13 @@
+{
+  "name": "linkedin-xray-search",
+  "private": true,
+  "scripts": {
+    "setup": "npm install && cd backend && python3 -m venv venv && ./venv/bin/pip install -r requirements.txt && cd ../frontend && npm install",
+    "dev": "concurrently -n BE,FE -c blue,green \"cd backend && ./venv/bin/uvicorn app.main:app --reload --port 8000\" \"cd frontend && npm run dev\"",
+    "dev:backend": "cd backend && ./venv/bin/uvicorn app.main:app --reload --port 8000",
+    "dev:frontend": "cd frontend && npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

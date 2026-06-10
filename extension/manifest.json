@@ -1,0 +1,45 @@
+{
+  "manifest_version": 3,
+  "name": "LinkedIn X-Ray Connector",
+  "version": "1.0.0",
+  "description": "Sends LinkedIn connection requests from X-Ray Search dashboard",
+  "permissions": ["tabs", "activeTab", "storage", "alarms", "scripting"],
+  "host_permissions": [
+    "https://*.linkedin.com/*",
+    "http://localhost:8000/*",
+    "http://localhost:3000/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.linkedin.com/in/*", "https://*.linkedin.com/preload/custom-invite/*"],
+      "js": ["content.js", "enrichment-content.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*.linkedin.com/mynetwork/invitation-manager/sent/*"],
+      "js": ["sync-sent-content.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*.linkedin.com/mynetwork/invite-connect/connections/*"],
+      "js": ["sync-connections-content.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["http://localhost:3000/*"],
+      "js": ["dashboard-content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "LinkedIn X-Ray Connector"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
